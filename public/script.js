@@ -21,23 +21,23 @@ navigator.mediaDevices.getUserMedia({
         socket.on("user connected ", (userId) => {
             connectNewUser(userId, stream)
         })
-        peer.on("call",(call)=>{
+        peer.on("call", (call) => {
             call.answer(stream)
-            const ans_video=document.createElement("video");
-            call.on("stream",(vid_stream)=>{
-                add_video(ans_video,vid_stream)
+            const ans_video = document.createElement("video");
+            call.on("stream", (vid_stream) => {
+                add_video(ans_video, vid_stream)
             })
         })
 
     })
 
 function connectNewUser(userId, stream) {
-    const call=peer.call(userId,stream)
-    
-    const video=document.createElement("video");
-    call.on("stream",(user_video)=>{
+    const call = peer.call(userId, stream)
+
+    const video = document.createElement("video");
+    call.on("stream", (user_video) => {
         // addVideoStream(video,user_video);
-        add_video(video,user_video)
+        add_video(video, user_video)
 
     })
 }
@@ -75,7 +75,38 @@ $(function () {
             $("#chat_message").val("");
         }
     })
+    $("#mute_button").click(function () {
+        const enabled = mystream.getAudioTracks()[0].enabled
+        if (enabled) {
+            mystream.getAudioTracks()[0].enabled = false
+            html = `<i class="fas fa-microphone-slash"  />`
+            $("#mute_button").toggleClass("background_red")
+            $("#mute_button").html(html)
+        }
+        else {
+            mystream.getAudioTracks()[0].enabled = true;
+            html = `<i class="fas fa-microphone" />`
+            $("#mute_button").toggleClass("background_red")
+            $("#mute_button").html(html)
+        }
 
+    })
+
+    $("#stop_video").click(function () {
+        const enabled=mystream.getVideoTracks()[0].enabled
+        if(enabled){
+            mystream.getVideoTracks()[0].enabled=false
+            html=`<i class="fas fa-video-slash"/>`
+            $("stop_video").toggleClass("background_red")
+            $("#stop_video").html(html)
+        }
+        else {
+                mystream.getVideoTracks()[0].enabled=true
+                html=`<i class="fas fa-video"/>`
+                $("stop_video").toggleClass("background_red")
+                $("#stop_video").html(html)
+        }
+    })
 })
 
 peer.on("open", (id) => {
