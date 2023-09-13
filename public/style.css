@@ -107,6 +107,7 @@
   padding: 1rem;
   background-color: #2f80ec;
   flex-grow: 1;
+  flex-wrap: wrap;
 }
 video{
   height: 300px;
@@ -117,6 +118,7 @@ video{
   transform: rotateY(180deg);
   -webkit-transform: rotateY(180deg);
   -moz-transform: rotateY(180deg);
+  
 }
 
 .background_red{
