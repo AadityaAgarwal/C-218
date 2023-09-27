@@ -1,3 +1,5 @@
+const { errorMonitor } = require("nodemailer/lib/xoauth2");
+
 const socket = io("/");
 
 var peer = new Peer(undefined, {
@@ -106,6 +108,23 @@ $(function () {
                 $("#stop_video").toggleClass("background_red")
                 $("#stop_video").html(html)
         }
+    })
+
+    $("#invite_button").click(function(){
+        const to=prompt("Enter email address: ")
+        data={
+            url:window.location.href,
+            to:to,
+        }
+        $.ajax({
+            url:"/sendmail",
+            type:'post',
+            data:JSON.stringify(data),
+            dataType:'json',
+            contentType:"application/json",
+            success:function(res){alert("Invite sent!!")},
+            error:function(res){console.log(res.responseJSON)},
+        })
     })
 })
 
